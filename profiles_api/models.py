@@ -1,11 +1,33 @@
 from email.policy import default
 from django.db import models
 # AbstractBaseUser >>  that is abstract baseuser from django .
-# permission >>  for django defult user to overied it .
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+# PermissionsMixin >>  for django defult user to overied it .
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin ,BaseUserManager
 
 
 # Create your models here.
+class UserProfileManager(BaseUserManager):
+    """Manager for user profiles"""
+ 
+    def create_user(self, email, name, password=None):
+        """create a new user profile"""
+        if not email:
+            raise ValueError('user must bave an email address')
+        email = self.normalize_email(email) # that will convert email to lower case.
+        user = self.model(email=email, name=name)
+        user.set_password(password) # to make encrypted password 
+        user.save(using=self._db) 
+        return user
+
+    def create_superuser(self, email, name, password):
+        """create and save a new superuser with given details"""
+        user = self.create_user(email, name, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
+
+
 class UserProfile(AbstractBaseUser,PermissionsMixin):
     """Database model for users in the system"""
     email = models.EmailField(max_length=255, unique=True)
@@ -14,7 +36,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
 
-    #objects = UserProfileManager()
+    objects = UserProfileManager()
 
     # to customize username field and set email 
     USERNAME_FIELD = 'email'
