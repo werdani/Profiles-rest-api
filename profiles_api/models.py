@@ -6,17 +6,18 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin ,BaseU
 
 
 # Create your models here.
+# to add super user .
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
  
     def create_user(self, email, name, password=None):
         """create a new user profile"""
         if not email:
-            raise ValueError('user must bave an email address')
+            raise ValueError('user must have an email address')
         email = self.normalize_email(email) # that will convert email to lower case.
         user = self.model(email=email, name=name)
-        user.set_password(password) # to make encrypted password 
-        user.save(using=self._db) 
+        user.set_password(password) # to make encrypted password .
+        user.save(using=self._db) #to specify the database that wants to use
         return user
 
     def create_superuser(self, email, name, password):
@@ -24,7 +25,7 @@ class UserProfileManager(BaseUserManager):
         user = self.create_user(email, name, password)
         user.is_superuser = True
         user.is_staff = True
-        user.save(using=self._db)
+        user.save(using=self._db) #to specify the database that wants to use
         return user
 
 
@@ -36,11 +37,11 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
 
-    objects = UserProfileManager()
+    objects = UserProfileManager() # call the userprofilemanager class like query selector. 
 
-    # to customize username field and set email 
+    # to customize username field and set email .
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name'] # to set name is required field 
+    REQUIRED_FIELDS = ['name'] # to set name is required field .
 
     def get_full_name(self):
         """Retrieve full name of user"""
