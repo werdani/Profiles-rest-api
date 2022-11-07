@@ -17,7 +17,7 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email) # that will convert email to lower case.
         user = self.model(email=email, name=name)
         user.set_password(password) # to make encrypted password .
-        user.save(using=self._db) #to specify the database that wants to use
+        user.save(using=self._db) #to specify the database that wants to use .
         return user
 
     def create_superuser(self, email, name, password):
