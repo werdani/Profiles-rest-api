@@ -1,7 +1,7 @@
 # Profiles REST API  
 
 ### APIView VS ViewSet :
-###### to create our api .
+##### to create our api .
 ###### APIView : is the monst basic type of view, apiview that is allow us to define functions that match the standerd HTTP protocole . 
 * Describe logic to make API endpoint .
 * Uses standard HTTP methods for functions .
