@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 # that is for viewsets .
 router =DefaultRouter()
 router.register('hello-viewset',views.HelloViewSet,basename='hello-viewset')
+router.register('profile-viewset',views.UserProfileViewSet)
 
 urlpatterns = [
     path('api-apiview',views.HelloApiView.as_view()), 
