@@ -1,13 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
-from profiles_api import Serializers
+from profiles_api import serializers
 
 
 class HelloApiView(APIView):
     """Test api view"""
-    serializer_class = Serializers.HelloSerializer
+    serializer_class = serializers.HelloSerializer
 
     def get(self, request, format=None):
         """Returbs a list of APIView features"""
@@ -31,11 +30,11 @@ class HelloApiView(APIView):
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self,request):
+    def put(self,request, pk=None):
         """Handle updating an object"""
         return Response({'message':'put'})
 
-    def patch(self, request):
+    def patch(self, request, pk=None):
         """Handle a partial update of an object"""
         return Response({'message':'patch'})
 
