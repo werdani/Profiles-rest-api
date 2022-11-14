@@ -1,5 +1,7 @@
 from email.policy import default
 from django.db import models
+from django.conf import settings
+
 # AbstractBaseUser >>  that is abstract baseuser from django .
 # PermissionsMixin >>  for django defult user to overied it .
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin ,BaseUserManager
@@ -56,4 +58,15 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
-       
+class ProfleFeedItem(models.Model):
+    """Profile status update"""
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    status_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return the model as a string"""
+        return self.status_text
