@@ -117,6 +117,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+''' 
+to set shis to a string which represents the model 
+that you wnat to use as the django user model .
+'''
 AUTH_USER_MODEL = 'profiles_api.UserProfile'
  
 # Static files (CSS, JavaScript, Images)

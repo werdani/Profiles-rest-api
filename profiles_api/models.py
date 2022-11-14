@@ -2,8 +2,11 @@ from email.policy import default
 from django.db import models
 from django.conf import settings
 
+
 # AbstractBaseUser >>  that is abstract baseuser from django .
 # PermissionsMixin >>  for django defult user to overied it .
+'''these are the standard base class that you need to use when overriding or 
+ customizing the default django user model.'''
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin ,BaseUserManager
 
 
@@ -16,9 +19,10 @@ class UserProfileManager(BaseUserManager):
         """create a new user profile"""
         if not email:
             raise ValueError('user must have an email address')
-        email = self.normalize_email(email) # that will convert email after '@' to lower case.
+        email = self.normalize_email(email) #normalize_email >> that will convert email after '@' to lower case.
         user = self.model(email=email, name=name)
-        user.set_password(password) # to make encrypted password .
+        #set_password >> the password is encrypted we want to make sure the password is converted to a hash .
+        user.set_password(password) 
         user.save(using=self._db) #to specify the database that wants to use .
         return user
 
@@ -38,8 +42,8 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-
-    objects = UserProfileManager() # call the userprofilemanager class like query selector. 
+    # that will overide the objects and call the userprofilemanager class like query selector. 
+    objects = UserProfileManager() 
 
     # to customize username field and set email .
     USERNAME_FIELD = 'email'
