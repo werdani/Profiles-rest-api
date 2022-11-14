@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework.response import Response # whicn is used to return respnses from the apiview.
+from rest_framework import status # is a list of handy of HTTP status code.
 from profiles_api import serializers
 from rest_framework import viewsets
 from profiles_api import models, permissions
@@ -14,9 +14,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 class HelloApiView(APIView):
     """Test api view"""
     serializer_class = serializers.HelloSerializer
-
-    def get(self, request, format=None):
-        """Returbs a list of APIView features"""
+     # retrieve a list of objects or a spacific object.
+    def get(self, request, format=None): # format >> used to add a format suffix to the end of the endpoint of URL
+        """Returns a list of APIView features"""
         an_apiview = [
             'user http methods as funtion (get, post, patch, put, delete)',
             'is similar to a traditional django view',
@@ -24,7 +24,7 @@ class HelloApiView(APIView):
             'welcom ammar yasser'
         ]
 
-        return Response({'message': 'Hello','an_apiview':an_apiview})
+        return Response({'message': 'Hello','The_apiview':an_apiview})
 
     def post(self, request):
         """create a hello message with our name"""
@@ -82,7 +82,7 @@ class HelloViewSet(viewsets.ViewSet):
 
 
     def partial_update(self , request, pk=None):
-        """Handle Updating part of an object"""
+        """Handle Updating part of an object like patch"""
         return Response({'http_method':'PATCH'})
     
     def destroy(self, request, pk=None):
@@ -90,12 +90,11 @@ class HelloViewSet(viewsets.ViewSet):
         return Response({'http_method':'DELETE'})
 
 
-    
 class UserProfileViewSet(viewsets.ModelViewSet):
     """Handle creating and updating profiles"""
+    authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
-    authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name','email',)
@@ -108,7 +107,7 @@ class UserLoginApiView(ObtainAuthToken):
 
 class UserProfileFeedViewSet(viewsets.ModelViewSet):
     """Handles creating ,reading and updating profile feed itams"""
-    authentication_classes = (TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.ProfileFeedItemSerializer
     queryset = models.ProfleFeedItem.objects.all()
     permission_classes = (

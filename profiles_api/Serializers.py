@@ -14,7 +14,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserProfile
         fields = ('id','email','name','password') 
-        # to don't retreive the password hash
+        # to don't retreive the password hash that make the password field write only.
         extra_kwargs ={
             'password':{
                 'write_only':True,
@@ -24,13 +24,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
         }
     def create(self, validated_data):
         """create and return a new user"""
-        user = models.UserProfile.objects.create_user(
+        user = models.UserProfile.objects.create_user( # that will override function in model 
             email = validated_data['email'],
             name = validated_data['name'],
             password = validated_data['password']
         )
 
-        return user
+        return user # that is a new user it is created .
 
     def update(self, instance, validated_data):
         """Handle updating user account"""
@@ -42,7 +42,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class ProfileFeedItemSerializer(serializers.ModelSerializer):
-    """Serializers profile feed items"""
+    """Serializers profile feed items"""   
 
     class Meta:
         modle = models.ProfleFeedItem

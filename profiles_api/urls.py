@@ -6,10 +6,11 @@ from rest_framework.routers import DefaultRouter
 # that is for viewsets .
 router =DefaultRouter()
 router.register('hello-viewset',views.HelloViewSet,basename='hello-viewset')
+'''write a basename if Idon't have an queryset from model'''
 router.register('profile-viewset',views.UserProfileViewSet)
 router.register('feed',views.UserProfileFeedViewSet)
 
-urlpatterns = [
+urlpatterns = [ 
     path('api-apiview',views.HelloApiView.as_view()), 
     path('login/',views.UserLoginApiView.as_view()), 
     # that is for viewsets .       

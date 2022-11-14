@@ -1,5 +1,6 @@
 from rest_framework import permissions
 
+# basepermission provides for making your own custom permissions classes .
 class UpdateOwnProfile(permissions.BasePermission):
     """Allow user to edit own profile"""
 
@@ -8,7 +9,6 @@ class UpdateOwnProfile(permissions.BasePermission):
         if request.mehtod in permissions.SAFE_METHODS:
             return True
         return obj.id == request.user.id
-        #return super().has_object_permission(request, view, obj)
 
 
 class UpdateOwnStatus(permissions.BasePermission):
