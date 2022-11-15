@@ -5,7 +5,7 @@ from profiles_api import serializers
 from rest_framework import viewsets
 from profiles_api import models, permissions
 from rest_framework.authentication import TokenAuthentication
-from rest_framework import filters
+from rest_framework import filters # that is for search profile 
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -96,8 +96,9 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserProfileSerializer
     queryset = models.UserProfile.objects.all()
     permission_classes = (permissions.UpdateOwnProfile,)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name','email',)
+    filter_backends = (filters.SearchFilter,) # add comma after search filter to python knows that is a tuple . 
+    search_fields = ('id','name','email',) # that tell the backend what fields we're to make searcheble .
+    
 
 
 class UserLoginApiView(ObtainAuthToken):
