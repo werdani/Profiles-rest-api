@@ -61,7 +61,7 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         """Return string represntation of our user"""
         return self.email
 
-
+'''this model to sore status updates in the system'''
 class ProfleFeedItem(models.Model):
     """Profile status update"""
     user_profile = models.ForeignKey(
